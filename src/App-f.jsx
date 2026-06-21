@@ -18,14 +18,14 @@ function CircleIcon({ icon, title, size = 30, effect = false }) {
   let name = icon || 'perfil';
   if (title && title.toLowerCase().includes('complement')) name = 'formacion-complementaria';
   return (
-    <div style={{ width: size, height: size, display: "flex", alignItems: "left", justifyContent: "center", flexShrink: 0 }}>
-      <ImgIcon name={name} size={30} style={effect ? { filter: 'invert(1)' } : undefined} />
+    <div style={{ width: size, height: size, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <ImgIcon name={name} size={size} style={effect ? { filter: 'invert(1)' } : undefined} />
     </div>
   );
 }
 
 function ToolIcon({ size = 16 }) {
-  return <ImgIcon name="tip" size={15} />;
+  return <ImgIcon name="tip" size={size} />;
 }
 
 function Editable({ value, onChange, as = "span", style, placeholder, multiline }) {
@@ -73,6 +73,7 @@ const btnStyle = { border: "none", background: "transparent", cursor: "pointer",
 function Entry({ entry, onChange, onDelete, onUp, onDown, showTip = false }) {
   const [hover, setHover] = useState(false);
   return (
+    // bloque de entrada con toolbar para editar, subir, bajar o eliminar
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: "relative", marginBottom: 16, paddingRight: 4 }}>
       <BlockToolbar visible={hover} onDelete={onDelete} onUp={onUp} onDown={onDown} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
@@ -129,36 +130,47 @@ function RightSection({ section, onChangeTitle, onAddEntry, onChangeEntry, onDel
 
 
 function LeftListBlock({ icon, title, items, onChangeTitle, onChangeItem, onDeleteItem, onAddItem, multiline, section, onChangeEntry, onDeleteEntry, onAddEntry }) {
-  // If a `section` object is provided (with entries), render those entries
   const isSection = !!section;
   const headerIcon = isSection ? section.icon : icon;
   const headerTitle = isSection ? section.title : title;
+  const isTech = isSection && (headerIcon === 'software' || String(headerTitle).toLowerCase().includes('stack'));
 
   return (
     <div style={{ marginBottom: 30 }}>
       <div style={{ display: "flex", alignItems: "left", gap: 10, marginBottom: 12 }}>
         <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
-          <CircleIcon icon={headerIcon} size={32} title={headerTitle} effect={true} />
+          <CircleIcon icon={headerIcon} size={20} title={headerTitle} effect={true} />
         </div>
         <div style={{ display: "inline-block" }}>
           <Editable value={headerTitle} onChange={isSection ? onChangeTitle : onChangeTitle} as="div"
-            style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 13, color: "#fff", textTransform: "uppercase" }} />
+            style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, color: "#fff", textTransform: "uppercase" }} />
         </div>
         <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.25)" }} />
       </div>
-      
+
       {isSection ? (
         section.entries.map((entry, i) => (
           <div key={entry.id} style={{ position: "relative", marginBottom: 8, marginLeft: 0 }}
             onMouseEnter={(e) => e.currentTarget.querySelector(".dlx").style.opacity = 1}
             onMouseLeave={(e) => e.currentTarget.querySelector(".dlx").style.opacity = 0}>
             <button className="dlx" onClick={() => onDeleteEntry && onDeleteEntry(i)} style={{ ...btnStyle, position: "absolute", right: -2, top: -2, opacity: 0, color: "#ff8a85" }}><ImgIcon name="x" size={12} /></button>
-            <Editable value={entry.title} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, title: v })} as="div"
-              style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 11, color: "#fff", lineHeight: 1.1 }} placeholder="Título" />
-            <Editable value={entry.date} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, date: v })} as="div"
-              style={{ fontFamily: FONT_BODY, fontSize: 11, color: "#d7e2ea", marginTop: 2 }} placeholder="Fechas" />
-            <Editable value={entry.org} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, org: v })} as="div"
-              style={{ fontFamily: FONT_BODY, fontSize: 11, color: TEAL, marginTop: 2 }} placeholder="Organización" />
+            {isTech ? (
+              <>
+                <Editable value={entry.title} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, title: v })} as="div"
+                  style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 11, color: "#fff", lineHeight: 1.1 }} placeholder="Título" />
+                <Editable value={entry.desc} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, desc: v })} as="div" multiline
+                  style={{ fontFamily: FONT_BODY, fontSize: 11, color: "#d7e2ea", marginTop: 4, lineHeight: 1.4 }} placeholder="Descripción" />
+              </>
+            ) : (
+              <>
+                <Editable value={entry.title} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, title: v })} as="div"
+                  style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 11, color: "#fff", lineHeight: 1.5 }} placeholder="Título" />
+                <Editable value={entry.date} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, date: v })} as="div"
+                  style={{ fontFamily: FONT_BODY, fontSize: 11, color: "#d7e2ea", lineHeight: 1.5 }} placeholder="Fechas" />
+                <Editable value={entry.org} onChange={(v) => onChangeEntry && onChangeEntry(i, { ...entry, org: v })} as="div"
+                  style={{ fontFamily: FONT_BODY, fontSize: 11, lineHeight: 1.5 }} placeholder="Organización" />
+              </>
+            )}
           </div>
         ))
       ) : (
@@ -193,7 +205,7 @@ const initialState = {
   contacto: [
     { icon: "mail", value: "jlalonsoredon@gmail.com" },
     { icon: "pin", value: "Durango | Vizcaya" },
-    { icon: "phone", value: "658429917" },
+    { icon: "tlf", value: "658429917" },
   ],
   masInfo: ["Disponibilidad: Inmediata", "Carné de conducir: B"],
 
@@ -204,7 +216,7 @@ const initialState = {
       { id: nid(), title: "Desarrollador y diseñador web.", date: "Sept 2018 - Agosto 2019", org: "Estudio Ainara Ipiña", desc: "Diseñar webs de Prestashop y WordPress. Resolver incidencias técnicas." },
       //{ id: nid(), title: "Desarrollador y diseñador web.", date: "Mayo 2018 - Octubre 2019", org: "Inicia Marketing", desc: "Colaboración en proyectos de Worpress y Prestashop. Realización de cursos de formación." },
       { id: nid(), title: "Desarrollador y diseñador web.", date: "Agosto 2016 - Mayo 2018", org: "MyEasyGest", desc: "Crear módulos y Themes para tiendas online de Prestashop." },
-      { id: nid(), title: "Técnico de redes.", date: "Mayo 2005 - Junio 2016", org: "Servitec instalaciones | Grupo S.T.C-Intelsis | SG Telecom", desc: "Instalación y mantenimiento para distintos operadores como Vodafone empresas o Jazztel." },
+      { id: nid(), title: "Técnico de redes.", date: "Mayo 2005 - Junio 2016", org: "Servitec instalaciones | Grupo S.T.C-Intelsis | SG Telecom", desc: "Instalar y mantener redes para distintos operadores como Vodafone empresas o Jazztel." },
       //{ id: nid(), title: "Técnico de sistemas y desarrollo Web.", date: "Marzo 2012 - Junio 2012", org: "SDS Sistemas de Seguridad.", desc: "Creación de la página web de la empresa con CMS, creando la plantilla desde cero. Realizando tareas de administración de sistemas." },
       //{ id: nid(), title: "Técnico de sistemas.", date: "Marzo 2010 - Junio 2010", org: "I.E.S San José Maristas, Durango.", desc: "Colaboración con el Centro de San Jose Maristak de Durango en la puesta a punto de equipos del siguiente curso." },
       //{ id: nid(), title: "Técnico de redes.", date: "Marzo 2007 - Junio 2010", org: "Grupo S.T.C-Intelsis.", desc: "Instalaciones y mantenimientos para Jazztel residencial y empresas y pruebas en central. Instalaciones de O.N.O en empresas con equipamientos de Cisco System." },
@@ -240,14 +252,19 @@ const initialState = {
   },
 
   software: {
-    id: nid(), icon: "software", title: "SOFTWARE",
+    id: nid(), icon: "software", title: "STACK TÉCNICO",
     entries: [
-      { id: nid(), title: "HTML5 | CSS3 | PHP", date: "", org: "", desc: "Creación de varias páginas Web y plantillas propias, basadas en bootstrap para CMS, por cuenta propia y en colaboraciones con Inicia Marketing." },
-      { id: nid(), title: "JAVA", date: "", org: "", desc: "Conocimientos adquiridos en diferentes cursos y aplicados en varias apps realizadas para Android." },
-      { id: nid(), title: "SEO", date: "", org: "", desc: "Participando en varios proyectos con Inicia Marketing." },
-      { id: nid(), title: "CISCO", date: "", org: "", desc: "Mas de seis años de experiencia instalando y configurando todo tipo de equipos de Cisco Systems." },
-      { id: nid(), title: "DISEÑO GRÁFICO", date: "", org: "", desc: "Manejo de varios programas de diseño gráfico como Inkscape, Adobe Illustrator o Photoshop." },
-      { id: nid(), title: "PYTHON | DATA SCIENCE", date: "", org: "", desc: "Análisis de datos, Machine Learning y visualización de información mediante Python, Pandas y Scikit-learn." },
+      { id: nid(), title: "PYTHON | DATA SCIENCE", date: "", org: "", desc: "Analizar datos, crear modelos de Machine Learning y visualizar información mediante Python, Pandas y Scikit-learn" },
+      { id: nid(), title: "MYSQL | POSTGRESQL | SQLSERVER", date: "", org: "", desc: "Diseñar y gestionar bases de datos relacionales para aplicaciones web." },
+      { id: nid(), title: "PHP | LARAVEL | ALPINE.JS", date: "", org: "", desc: "Desarrollar aplicaciones backend y CRMs a medida con arquitectura MVC y componentes reactivos ligeros." },
+      { id: nid(), title: "HTML5 | CSS3 | JAVASCRIPT", date: "", org: "", desc: "Crear interfaces web modernas y tipadas, con buenas prácticas de desarrollo frontend." },
+      { id: nid(), title: "ASTRO | TYPESCRIPT | TAILWIND", date: "", org: "", desc: "Construir sitios web rápidos y modernos con generación estática y diseño basado en utilidades." },
+      { id: nid(), title: "WORDPRESS | PRESTASHOP", date: "", org: "", desc: "Diseñar y desarrollar tiendas online y sitios corporativos sobre estos CMS." },
+      // { id: nid(), title: "JAVA", date: "", org: "", desc: "Conocimientos adquiridos en diferentes cursos y aplicados en varias apps realizadas para Android." },
+      { id: nid(), title: "SEO", date: "", org: "", desc: "Optimización de sitios web para mejorar su visibilidad en los motores de búsqueda." },
+      // { id: nid(), title: "CISCO", date: "", org: "", desc: "Mas de seis años de experiencia instalando y configurando todo tipo de equipos de Cisco Systems." },
+      { id: nid(), title: "DISEÑO GRÁFICO", date: "", org: "", desc: "Crear diseños gráficos con software libre como Inkscape o GIMP." },
+      
     ],
   },
 };
@@ -293,10 +310,13 @@ export default function CVEditorDark() {
     a.href = url; a.download = "cv-data.json"; a.click();
   };
 
-  const contactIcon = (icon) => {
-    if (icon === "mail") return <ImgIcon name="mail" size={14} style={{ color: '#fff' }} />;
-    if (icon === "pin") return <ImgIcon name="map-pin" size={14} style={{ color: '#fff' }} />;
-    return <ImgIcon name="phone" size={14} style={{ color: '#fff' }} />;
+  // Map logical contact icon names to actual SVG filenames and apply inverted filter for header
+  const contactIcon = (icon, size = 14) => {
+    const style = { filter: 'invert(1)' };
+    if (icon === "mail") return <ImgIcon name="mail" size={size} style={style} />;
+    if (icon === "pin") return <ImgIcon name="pin" size={size} style={style} />;
+    if (icon === "tlf" || icon === "phone") return <ImgIcon name="tlf" size={size} style={style} />;
+    return <ImgIcon name={icon} size={size} style={style} />;
   };
 
   return (
@@ -328,6 +348,16 @@ export default function CVEditorDark() {
           <div>
             <Editable value={cv.name} onChange={(v) => setCv({ ...cv, name: v })} as="div" style={{ color: "#fff", fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 23, letterSpacing: 0.3, textAlign: "left" }} />
             <Editable value={cv.title} onChange={(v) => setCv({ ...cv, title: v })} as="div" style={{ color: TEAL_LIGHT, fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, marginTop: 3 }} />
+            <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 8, flexWrap: "wrap" }}>
+              {cv.contacto.map((c, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, color: "#d7e2ea", fontFamily: FONT_BODY, fontSize: 12 }}>
+                  <div style={{ width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {contactIcon(c.icon)}
+                  </div>
+                  <Editable value={c.value} onChange={(v) => updateContacto(i, v)} as="div" style={{ color: "#d7e2ea", fontFamily: FONT_BODY, fontSize: 12, display: "inline-block" }} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -341,29 +371,15 @@ export default function CVEditorDark() {
             <div style={{ marginBottom: 20 }}>
               <LeftListBlock section={cv.formacionAcademica} {...makeSectionHandlers("formacionAcademica")} />
             </div>
-            {/* CONTACTO (custom render: icon circle + value) */}
-            <div style={{ marginBottom: 20 }}>
-              <div style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 16, color: "#fff", textTransform: "uppercase", marginBottom: 10 }}>CONTACTO</div>
-              <div style={{ borderBottom: "1px solid rgba(255,255,255,0.25)", marginBottom: 12 }} />
-              {cv.contacto.map((c, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "left", gap: 10, marginBottom: 10, position: "relative" }}
-                  onMouseEnter={(e) => e.currentTarget.querySelector(".cdx").style.opacity = 1}
-                  onMouseLeave={(e) => e.currentTarget.querySelector(".cdx").style.opacity = 0}>
-                  <div style={{ width: 26, height: 26, borderRadius: "50%", background: TEAL, display: "flex", alignItems: "left", justifyContent: "left", flexShrink: 0 }}>
-                    {contactIcon(c.icon)}
-                  </div>
-                  <Editable value={c.value} onChange={(v) => updateContacto(i, v)} as="div" style={{ fontFamily: FONT_BODY, fontSize: 12, color: "#d7e2ea", flex: 1 }} />
-                  <button className="cdx" onClick={() => deleteContacto(i)} style={{ ...btnStyle, opacity: 0, color: "#ff8a85" }}><ImgIcon name="x" size={12} /></button>
-                </div>
-              ))}
-              <button onClick={addContacto} className="no-print" style={{ display: "flex", alignItems: "left", gap: 5, fontSize: 11, color: TEAL_LIGHT, background: "rgba(255,255,255,0.06)", border: `1px dashed ${TEAL_LIGHT}`, borderRadius: 5, padding: "4px 9px", cursor: "pointer", fontFamily: FONT_HEAD }}>
-                <ImgIcon name="plus" size={12} /> Añadir
-              </button>
-            </div>
+              {/* STACK TÉCNICO */}
+              <div style={{ marginBottom: 20 }}>
+                <LeftListBlock section={cv.software} {...makeSectionHandlers("software")} />
+              </div>
+            {/* Contact moved to header */}
 
             {/* MAS INFO */}
             <div style={{ marginBottom: 10 }}>
-              <div style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 16, color: "#fff", textTransform: "uppercase", marginBottom: 10 }}>MÁS INFORMACIÓN</div>
+              <div style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 13, color: "#fff", textTransform: "uppercase", marginBottom: 10 }}>MÁS INFORMACIÓN</div>
               <div style={{ borderBottom: "1px solid rgba(255,255,255,0.25)", marginBottom: 12 }} />
               {cv.masInfo.map((item, i) => (
                 <div key={i} style={{ position: "relative", marginBottom: 8 }}
