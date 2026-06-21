@@ -1,6 +1,6 @@
 # Curriculum — Editor de CV
 
-![Vista previa de la plantilla](src/assets/img/cv.jpg)
+![Vista previa de la plantilla](src/assets/img/cv.png)
 
 Un editor visual de currículums construido con Vite + React. Permite modificar el contenido en línea, personalizar secciones, ajustar el diseño y exportar el CV a PDF con un aspecto profesional y moderno.
 
