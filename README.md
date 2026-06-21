@@ -1,48 +1,52 @@
 # Curriculum — Editor de CV
 
-![Vista previa de la plantilla](src/assets/img/preview-readme.png)
+![Vista previa de la plantilla](src/assets/img/cv.jpg)
 
-Un editor visual de currículums construido con Vite + React. Permite editar texto in-place, gestionar secciones y exportar el CV a PDF con una plantilla moderna y profesional.
+Un editor visual de currículums construido con Vite + React. Permite modificar el contenido en línea, personalizar secciones, ajustar el diseño y exportar el CV a PDF con un aspecto profesional y moderno.
 
-**Características**
+## ✨ Características
 
-- Edición en línea (haz clic en cualquier texto para editar).
-- Secciones y entradas reordenables.
-- Exportar a PDF desde el navegador.
-- Subida de foto de perfil y manejo de iconos SVG.
+- Edición en línea: haz clic en cualquier texto para modificarlo.
+- Diseño modular: secciones como experiencia, formación y stack técnico.
+- Exportación a PDF: imprime o guarda como PDF desde el navegador.
+- Integración visual: incluye iconos, foto de perfil y un estilo tipo CV corporativo.
+- Fácil de ejecutar: listo para trabajar con Vite y React.
 
-**Captura / Instrucciones para la imagen**
+## 🖼️ Vista previa
 
-La imagen incluida arriba sirve como captura para el README. Para que se muestre correctamente copia la imagen adjunta en la conversación a la ruta:
+La imagen principal del proyecto se encuentra en [src/assets/img/cv.jpg](src/assets/img/cv.jpg). Sirve como referencia visual para mostrar el resultado final del editor.
 
-- `src/assets/img/preview-readme.png`
-
-Si prefieres que incruste la imagen directamente (Data URI) dímelo y lo hago, pero el archivo resultante será mucho más pesado.
-
-**Instalación y ejecución**
+## 🚀 Instalación y uso
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre la URL que indique Vite (por ejemplo `http://localhost:5173/`) para ver el editor.
+Abre la URL que indique Vite, normalmente `http://localhost:5173/`, para ver el editor.
 
-**Exportar a PDF**
+## 🧾 Exportar a PDF
 
-- Usa `Imprimir` → `Guardar como PDF` en el navegador.
-- Si aparece una página en blanco o el contenido se divide, ajusta la escala/márgenes en el diálogo de impresión. Puedo aplicar más ajustes CSS al `@media print` si quieres que encaje siempre en una sola hoja.
+Para generar el PDF:
 
-**Archivos clave**
+1. Pulsa el botón de imprimir/guardar PDF.
+2. En el navegador selecciona `Imprimir` o `Guardar como PDF`.
+3. Ajusta márgenes y escala si es necesario.
 
-- [src/App-f.jsx](src/App-f.jsx) — Editor principal y lógica UI.
-- [src/assets/img](src/assets/img) — Iconos y recursos SVG.
+## 🧩 Estructura del proyecto
 
-**Contribuir**
+- [src/App-f.jsx](src/App-f.jsx) — lógica principal del editor y renderizado del CV.
+- [src/assets/img](src/assets/img) — recursos visuales, iconos e imagen principal.
+- [public](public) — archivos estáticos.
 
-1. Haz fork y crea una rama nueva.
-2. Asegúrate de que los cambios sean pequeños y explicados en el PR.
+## 🤝 Contribución
+
+Si quieres mejorar el proyecto:
+
+1. Haz fork del repositorio.
+2. Crea una rama con tus cambios.
+3. Abre un pull request describiendo lo que has modificado.
 
 ---
 
-¿Quieres que añada la imagen por mí al repositorio (la subo como `src/assets/img/preview-readme.png`) o prefieres insertarla manualmente?
+Este proyecto está pensado como una base rápida para crear currículums profesionales y personalizables con una experiencia de edición muy sencilla.
