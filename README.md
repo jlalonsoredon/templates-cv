@@ -1,16 +1,48 @@
-# React + Vite
+# Curriculum — Editor de CV
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Vista previa de la plantilla](src/assets/img/preview-readme.png)
 
-Currently, two official plugins are available:
+Un editor visual de currículums construido con Vite + React. Permite editar texto in-place, gestionar secciones y exportar el CV a PDF con una plantilla moderna y profesional.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Características**
 
-## React Compiler
+- Edición en línea (haz clic en cualquier texto para editar).
+- Secciones y entradas reordenables.
+- Exportar a PDF desde el navegador.
+- Subida de foto de perfil y manejo de iconos SVG.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Captura / Instrucciones para la imagen**
 
-## Expanding the ESLint configuration
+La imagen incluida arriba sirve como captura para el README. Para que se muestre correctamente copia la imagen adjunta en la conversación a la ruta:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `src/assets/img/preview-readme.png`
+
+Si prefieres que incruste la imagen directamente (Data URI) dímelo y lo hago, pero el archivo resultante será mucho más pesado.
+
+**Instalación y ejecución**
+
+```bash
+npm install
+npm run dev
+```
+
+Abre la URL que indique Vite (por ejemplo `http://localhost:5173/`) para ver el editor.
+
+**Exportar a PDF**
+
+- Usa `Imprimir` → `Guardar como PDF` en el navegador.
+- Si aparece una página en blanco o el contenido se divide, ajusta la escala/márgenes en el diálogo de impresión. Puedo aplicar más ajustes CSS al `@media print` si quieres que encaje siempre en una sola hoja.
+
+**Archivos clave**
+
+- [src/App-f.jsx](src/App-f.jsx) — Editor principal y lógica UI.
+- [src/assets/img](src/assets/img) — Iconos y recursos SVG.
+
+**Contribuir**
+
+1. Haz fork y crea una rama nueva.
+2. Asegúrate de que los cambios sean pequeños y explicados en el PR.
+
+---
+
+¿Quieres que añada la imagen por mí al repositorio (la subo como `src/assets/img/preview-readme.png`) o prefieres insertarla manualmente?

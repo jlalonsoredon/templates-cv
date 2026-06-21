@@ -74,7 +74,7 @@ function Entry({ entry, onChange, onDelete, onUp, onDown, showTip = false }) {
   const [hover, setHover] = useState(false);
   return (
     // bloque de entrada con toolbar para editar, subir, bajar o eliminar
-    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: "relative", marginBottom: 16, paddingRight: 4 }}>
+    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ position: "relative", marginBottom: 12, paddingRight: 4 }}>
       <BlockToolbar visible={hover} onDelete={onDelete} onUp={onUp} onDown={onDown} />
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
         <div style={{ marginTop: 1 }}>{showTip ? <ImgIcon name="tip" size={15} /> : <ToolIcon />}</div>
@@ -91,7 +91,7 @@ function Entry({ entry, onChange, onDelete, onUp, onDown, showTip = false }) {
           )}
           {entry.desc !== undefined && (
             <Editable value={entry.desc} onChange={(v) => onChange({ ...entry, desc: v })} as="div" multiline placeholder=""
-              style={{ color: BODY_TXT, fontFamily: FONT_BODY, fontSize: 11.5, marginTop: 3, lineHeight: 1.45, textAlign: "left" }} />
+              style={{ color: BODY_TXT, fontFamily: FONT_BODY, fontSize: 11.5, lineHeight: 1.45, textAlign: "left" }} />
           )}
         </div>
       </div>
@@ -105,15 +105,17 @@ function RightSection({ section, onChangeTitle, onAddEntry, onChangeEntry, onDel
     <div style={{ marginBottom: 15 }}>
       <div onMouseEnter={() => setHoverHead(true)} onMouseLeave={() => setHoverHead(false)} style={{ position: "relative" }}>
         <BlockToolbar visible={hoverHead} onDelete={onDeleteSection} />
-        <div style={{ display: "flex", alignItems: "left", gap: 12, marginBottom: 14 }}>
-          <div style={{ display: "flex", alignItems: "left", justifyContent: "center" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 6 }}>
+          <div style={{ display: "flex", alignItems: "left", justifyContent: "center", marginTop: 4 }}>
             <CircleIcon icon={section.icon} title={section.title} />
           </div>
-          <div style={{ display: "inline-block" }}>
-            <Editable value={section.title} onChange={onChangeTitle} as="div"
-              style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 15, color: DARK_TXT, textTransform: "uppercase", letterSpacing: 0.3 }} />
+          <div style={{ flex: 1 }}>
+            <div>
+              <Editable value={section.title} onChange={onChangeTitle} as="div"
+                style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 15, color: DARK_TXT, textTransform: "uppercase", letterSpacing: 0.3, textAlign: "left", marginTop: 4 }} />
+            </div>
+            <div style={{ height: 2, background: "rgb(26, 26, 26)"}} />
           </div>
-          <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.12)" }} />
         </div>
       </div>
       {section.entries.map((entry, i) => (
@@ -136,16 +138,18 @@ function LeftListBlock({ icon, title, items, onChangeTitle, onChangeItem, onDele
   const isTech = isSection && (headerIcon === 'software' || String(headerTitle).toLowerCase().includes('stack'));
 
   return (
-    <div style={{ marginBottom: 30 }}>
-      <div style={{ display: "flex", alignItems: "left", gap: 10, marginBottom: 12 }}>
-        <div style={{ display: "flex", alignItems: "left", justifyContent: "left" }}>
+    <div style={{ marginBottom: 15 }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "left", marginTop: 4 }}>
           <CircleIcon icon={headerIcon} size={20} title={headerTitle} effect={true} />
         </div>
-        <div style={{ display: "inline-block" }}>
-          <Editable value={headerTitle} onChange={isSection ? onChangeTitle : onChangeTitle} as="div"
-            style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, color: "#fff", textTransform: "uppercase" }} />
+        <div style={{ flex: 1 }}>
+          <div>
+            <Editable value={headerTitle} onChange={isSection ? onChangeTitle : onChangeTitle} as="div"
+              style={{ fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, color: "#fff", textTransform: "uppercase", textAlign: "left" }} />
+          </div>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.25)" }} />
         </div>
-        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,0.25)" }} />
       </div>
 
       {isSection ? (
@@ -200,19 +204,19 @@ const initialState = {
   title: "Data Science | Machine Learning | Desarrollador web",
   photo: null,
   sobreMi: [
-    "Más de 15 años en desarrollo web y sistemas con formación reciente en Python, Machine Learning e ingeniería de datos. Aporto una visión híbrida desarrollo + datos a proyectos con impacto real en el negocio.",
+    "Más de 15 años en desarrollo web y sistemas con formación reciente en Python, Machine Learning e ingeniería de datos. Aporto una visión híbrida desarrollo y datos en proyectos con impacto real en el negocio.",
   ],
   contacto: [
     { icon: "mail", value: "jlalonsoredon@gmail.com" },
     { icon: "pin", value: "Durango | Vizcaya" },
     { icon: "tlf", value: "658429917" },
   ],
-  masInfo: ["Disponibilidad: Inmediata", "Carné de conducir: B"],
+  masInfo: ["Disponibilidad: Inmediata", "Carné de conducir: B", "Inglés: B2"],
 
   experiencia: {
     id: nid(), icon: "experiencia", title: "EXPERIENCIA PROFESIONAL",
     entries: [
-      { id: nid(), title: "Desarrollador y diseñador web.", date: "Octubre 2019 - Abril 2025", org: "Lanmedia", desc: "Desarrollar y mantener el CRM en Laravel, integrando plataformas externas. Diseñar y mantener la web corporativa. Crear funcionalidades a medida para clientes." },
+      { id: nid(), title: "Desarrollador y diseñador web.", date: "Octubre 2019 - Abril 2025", org: "Lanmedia", desc: "Desarrollar y mantener el CRM en Laravel, integrando plataformas externas. Diseñar y mantener la web corporativa. Crear funcionalidades a medida para clientes. Diseñar dashboards de KPIs para apoyar la toma de decisiones y generar informes." },
       { id: nid(), title: "Desarrollador y diseñador web.", date: "Sept 2018 - Agosto 2019", org: "Estudio Ainara Ipiña", desc: "Diseñar webs de Prestashop y WordPress. Resolver incidencias técnicas." },
       //{ id: nid(), title: "Desarrollador y diseñador web.", date: "Mayo 2018 - Octubre 2019", org: "Inicia Marketing", desc: "Colaboración en proyectos de Worpress y Prestashop. Realización de cursos de formación." },
       { id: nid(), title: "Desarrollador y diseñador web.", date: "Agosto 2016 - Mayo 2018", org: "MyEasyGest", desc: "Crear módulos y Themes para tiendas online de Prestashop." },
@@ -232,21 +236,21 @@ const initialState = {
     id: nid(), icon: "formacion", title: "FORMACIÓN ACADÉMICA",
     entries: [
       { id: nid(), title: "Grado Superior en ASIR", date: "2010 - 2012", org: "I.E.S San José Maristas, Durango.", desc: "Técnico Superior en Administración de Sistemas Operativos en Red." },
-      { id: nid(), title: "Diplomado en Magisterio Educación Primaria", date: "Septiembre 1998 - Junio 2001", org: "Universidad de Valladolid", desc: "" },
+      { id: nid(), title: "Diplomado en Magisterio", date: "1998 - 2001", org: "Universidad de Valladolid", desc: "" },
     ],
   },
 
   formacionComplementaria: {
     id: nid(), icon: "formacion", title: "FORMACIÓN COMPLEMENTARIA",
     entries: [
-      { id: nid(), title: "Bootcamp en Data Science e IA", date: "Febrero 2026 - Junio 2026", org: "The Bridge Digital Talent Accelerator.", desc: "Analizar y tratar datos con Python, construir modelos de Machine Learning y aplicar ingeniería de datos. Desarrollar proyectos de IA orientados a extracción de conocimiento y automatización de procesos." },
+      { id: nid(), title: "Bootcamp en Data Science e IA", date: "Febrero 2026 - Junio 2026", org: "The Bridge Digital Talent Accelerator.", desc: "Analizar y tratar datos con Python, construir modelos de Machine Learning y aplicar ingeniería de datos. Desarrollar proyectos de IA orientados a extracción de conocimiento y automatización de procesos. Proyectos en github.com/jlalonsoredon" },
       { id: nid(), title: "Desarrollo con IA", date: "Octubre 2025", org: "The Big School.", desc: "Aplicar fundamentos y herramientas de IA en programación, integrando modelos de IA en proyectos reales mediante teoría y ejercicios prácticos." },
       //{ id: nid(), title: "Emprendimiento y App Inventor", date: "Marzo 2015 - Mayo 2015", org: "UNED (Universidad a distancia).", desc: "Diseño de aplicaciones para dispositivos móviles del sistema operativo Android y las maneras de monetizar los proyectos resultantes de esas propuestas." },
       //{ id: nid(), title: "Desarrollo de Aplicaciones Móviles de Realidad Aumentada y P2P", date: "Marzo 2015 - Mayo 2015", org: "UNED (Universidad a distancia).", desc: "Diseño de aplicaciones que implementan realidad aumentada y comunicaciones P2P haciendo uso del SDK de Vuforia sobre Unity y del SDK de AllJoyn sobre Eclips." },
       //{ id: nid(), title: "Pensamiento Computacional en la Escuela", date: "Marzo 2015 - Mayo 2015", org: "Universidad del País Vasco/ Euskal Herriko Unibertsitatea.", desc: "Identificar en términos computacionales los problemas del día a día, y aplicar técnicas y procedimientos computacionales para resolverlos. Creación de programas con Scratch." },
       //{ id: nid(), title: "Estrategias de Marketing Online. Community Manager", date: "Enero 2015 - Febrero 2015", org: "Universidad CEU Cardenal Herrera.", desc: "Conocer las distintas redes sociales para aplicar estrategias de Marketing online concretas y eficientes." },
       { id: nid(), title: "Desarrollo de aplicaciones para Android", date: "Abril 2013 - Junio 2013", org: "I.E.S San José Maristas, Durango.", desc: "Diseñar aplicaciones nativas para Android con Java XHL y Eclipse. Organizado por Lanbide de 180 horas de duración." },
-      { id: nid(), title: "Administrador Internet/ Intranet/ Extranet", date: "Junio 2003 - Octubre 2003", org: "Centro de estudios “Campo Grande”.", desc: "Topografía de redes, administración de servidores a través de Windows NT Server, Linux, instalación y configuración de servicios Internet/ Intranet/ Extranet. Duración 450 horas." },
+      { id: nid(), title: "Administrador Internet/ Intranet/ Extranet", date: "Junio 2003 - Octubre 2003", org: "Centro de estudios “Campo Grande”.", desc: "Diseñar Topografía de redes, administrar de servidores a través de Windows NT Server, Linux, instalación y configuración de servicios Internet/ Intranet/ Extranet. Duración 450 horas." },
       { id: nid(), title: "Programador de aplicaciones informáticas", date: "Enero 2002 - Agosto 2002", org: "Centro de estudios “Campo Grande”.", desc: "Varios lenguajes: COBOL, NATURAL, C, C++, JAVA, Visual Basic, SQL y diferentes entornos (Host, UNIX, Internet,...). Duración 950 horas." },
     ],
   },
@@ -261,7 +265,7 @@ const initialState = {
       { id: nid(), title: "ASTRO | TYPESCRIPT | TAILWIND", date: "", org: "", desc: "Construir sitios web rápidos y modernos con generación estática y diseño basado en utilidades." },
       { id: nid(), title: "WORDPRESS | PRESTASHOP", date: "", org: "", desc: "Diseñar y desarrollar tiendas online y sitios corporativos sobre estos CMS." },
       // { id: nid(), title: "JAVA", date: "", org: "", desc: "Conocimientos adquiridos en diferentes cursos y aplicados en varias apps realizadas para Android." },
-      { id: nid(), title: "SEO", date: "", org: "", desc: "Optimización de sitios web para mejorar su visibilidad en los motores de búsqueda." },
+      { id: nid(), title: "SEO", date: "", org: "", desc: "Optimizar sitios web para los buscadores." },
       // { id: nid(), title: "CISCO", date: "", org: "", desc: "Mas de seis años de experiencia instalando y configurando todo tipo de equipos de Cisco Systems." },
       { id: nid(), title: "DISEÑO GRÁFICO", date: "", org: "", desc: "Crear diseños gráficos con software libre como Inkscape o GIMP." },
       
@@ -332,7 +336,12 @@ export default function CVEditorDark() {
 
       <style>{`
         @page { margin: 0; }
-        @media print { .no-print { display: none !important; } .no-print-if-empty { display: none !important; } body { background: white !important; margin: 0; } .cv-page { box-shadow: none !important; margin: 0 !important; page-break-after: always; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+        @media print {
+          .no-print { display: none !important; }
+          .no-print-if-empty { display: none !important; }
+          body { background: white !important; margin: 0; }
+          .cv-page { box-shadow: none !important; margin: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; min-height: auto !important; page-break-after: auto !important; }
+        }
         input, textarea { outline: none; }
       `}</style>
 
@@ -340,24 +349,38 @@ export default function CVEditorDark() {
         {/* HEADER */}
         <div style={{ background: NAVY_DARK, display: "flex", alignItems: "left", padding: "22px 30px", gap: 20 }}>
           <div onClick={() => fileInputRef.current.click()}
-            style={{ width: 92, height: 92, borderRadius: 8, background: "rgb(21, 33, 45)", backgroundImage: cv.photo ? `url(${cv.photo})` : "none", backgroundSize: "cover", backgroundPosition: "center", flexShrink: 0, cursor: "pointer", display: "flex", alignItems: "left", justifyContent: "center", color: "#fff", fontSize: 11, textAlign: "left" }}
+            style={{ width: 110, height: 110, borderRadius: 8, marginTop:8, background: "rgb(21, 33, 45)", backgroundImage: cv.photo ? `url(${cv.photo})` : "none", backgroundSize: "cover", backgroundPosition: "center", flexShrink: 0, cursor: "pointer", display: "flex", alignItems: "left", justifyContent: "center", color: "#fff", fontSize: 11, textAlign: "left" }}
             title="Clic para subir foto">
             {!cv.photo && "Subir foto"}
           </div>
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhotoUpload} style={{ display: "none" }} />
-          <div>
+          <div style={{ flex: 1, textAlign: "left" }}>
             <Editable value={cv.name} onChange={(v) => setCv({ ...cv, name: v })} as="div" style={{ color: "#fff", fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 23, letterSpacing: 0.3, textAlign: "left" }} />
-            <Editable value={cv.title} onChange={(v) => setCv({ ...cv, title: v })} as="div" style={{ color: TEAL_LIGHT, fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, marginTop: 3 }} />
-            <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 8, flexWrap: "wrap" }}>
+            <Editable value={cv.title} onChange={(v) => setCv({ ...cv, title: v })} as="div" style={{ color: TEAL_LIGHT, fontFamily: FONT_HEAD, fontWeight: 700, fontSize: 14, textAlign: "left" }} />
+            <div style={{ display: "flex", gap: 14, alignItems: "center", marginTop: 8, flexWrap: "wrap", justifyContent: "flex-start" }}>
               {cv.contacto.map((c, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, color: "#d7e2ea", fontFamily: FONT_BODY, fontSize: 12 }}>
-                  <div style={{ width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
                     {contactIcon(c.icon)}
                   </div>
                   <Editable value={c.value} onChange={(v) => updateContacto(i, v)} as="div" style={{ color: "#d7e2ea", fontFamily: FONT_BODY, fontSize: 12, display: "inline-block" }} />
                 </div>
               ))}
             </div>
+              <div style={{ display: "flex", gap: 12, alignItems: "left", marginTop: 8, justifyContent: "flex-start", flexWrap: "wrap" }}>
+                <a href="https://joseluisalonsoredondo.com/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: FONT_BODY, fontSize: 11, textDecoration: "none" }}>
+                  <div style={{ width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>{contactIcon('web', 16)}</div>
+                  <div style={{ color: "#fff" }}>joseluisalonsoredondo.com/</div>
+                </a>
+                <a href="https://github.com/jlalonsoredon/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: FONT_BODY, fontSize: 11, textDecoration: "none" }}>
+                  <div style={{ width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>{contactIcon('github', 16)}</div>
+                  <div style={{ color: "#fff" }}>github.com/jlalonsoredon/</div>
+                </a>
+                <a href="https://www.linkedin.com/in/jose-luis-alonso-redondo/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: FONT_BODY, fontSize: 11, textDecoration: "none" }}>
+                  <div style={{ width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>{contactIcon('linkedin', 16)}</div>
+                  <div style={{ color: "#fff" }}>linkedin.com/in/jose-luis-alonso-redondo/</div>
+                </a>
+              </div>
           </div>
         </div>
 
@@ -368,11 +391,11 @@ export default function CVEditorDark() {
             <LeftListBlock icon="perfil" title="SOBRE MÍ" items={cv.sobreMi}
               onChangeTitle={() => {}} onChangeItem={updateSobreMi} onDeleteItem={deleteSobreMi} onAddItem={addSobreMi} multiline />
             {/* FORMACIÓN ACADÉMICA (custom render: entries with org + date) */}
-            <div style={{ marginBottom: 20 }}>
+            <div style={{ marginBottom: 10 }}>
               <LeftListBlock section={cv.formacionAcademica} {...makeSectionHandlers("formacionAcademica")} />
             </div>
               {/* STACK TÉCNICO */}
-              <div style={{ marginBottom: 20 }}>
+              <div style={{ marginBottom: 10 }}>
                 <LeftListBlock section={cv.software} {...makeSectionHandlers("software")} />
               </div>
             {/* Contact moved to header */}
